@@ -1,13 +1,14 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=225)
-    slug = models.SlugField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class Product(models.Model):
     title = models.CharField(max_length=225)
@@ -18,9 +19,20 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+
+STARS = [
+    (1, '1 star'),
+    (2, '2 stars'),
+    (3, '3 stars'),
+    (4, '4 stars'),
+    (5, '5 stars')
+]
+
+
 class Review(models.Model):
     text = models.CharField(max_length=225)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews'),
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    stars = models.PositiveIntegerField(choices=STARS, default=1)
 
     def __str__(self):
         return self.text
